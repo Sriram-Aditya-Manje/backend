@@ -1,0 +1,8 @@
+steps to create a Express App (REST API)
+1. Create a new folder
+2. create Package.json (npm init)
+3. while npm init it asks for entry point file 
+    now create the file specified there (app.js)
+4. Install and import Express
+    npm install express 
+    require('express')

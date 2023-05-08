@@ -1,0 +1,26 @@
+//Only GET req can be made by default
+//for other kinds of requests we need client side application like reactJS
+
+GET http://localhost:3000 
+//sends get request to given url
+
+//OUTPUT:
+# HTTP/1.1 200 OK
+// HTTP/1.1 is 1.1 version of HTTP, 200 is status code, OK is status
+# Date: Sun, 07 May 2023 09:54:08 GMT
+// Date and time
+# Connection: close
+// After response is recieved connection is said to be in closed state
+# Content-Length: 11
+// length of response
+# hello world
+// the final response
+###
+
+GET http://localhost:3000
+###
+POST http://localhost:3000
+###
+PUT http://localhost:3000
+###
+DELETE http://localhost:3000
