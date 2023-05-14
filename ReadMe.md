@@ -30,7 +30,7 @@ The contents of this repository are organized into several files, each covering 
 
 8. **8MongoDB**: MongoDB shell usage and mongodb commands
 
-9. **5MongoDBAtlas**: Connected with mongoDB atlas and performed CRUD operations with APIs (not fully completed)
+9. **9MongoDBAtlas**: Connected with mongoDB atlas and performed CRUD operations with APIs (not fully completed)
 
 ## Usage
 
