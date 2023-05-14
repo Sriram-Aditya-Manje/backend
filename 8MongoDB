@@ -1,0 +1,154 @@
+1. Open MongoDB shell
+
+To show databases:
+
+    test> show databases
+    admin   40.00 KiB
+    config  72.00 KiB
+    local   72.00 KiB
+
+    test> show dbs
+    admin   40.00 KiB
+    config  72.00 KiB
+    local   72.00 KiB
+
+To use database
+    ->use <dbName>
+    id db doesnt exist it will create that db and use it
+
+    test> use test1
+    switched to db test1
+
+To show current db:
+    test1> db
+    test1
+
+To create collection:
+    test1> db.createCollection('userCollection')
+    { ok: 1 }
+
+To show collections:
+    test1> show collections
+    userCollection
+
+To insert data:
+
+    1. To insert single collection:
+        test1> db.userCollection.insertOne({id:4,name:"aditya"})
+        {
+          acknowledged: true,
+          insertedId: ObjectId("6460a4c01401cb8fe58e371d")
+        }
+
+        ObjectId("6460a4c01401cb8fe58e371d") is similar to primary key in mySql unqiue id for every objec
+    
+    2. To insert multiple collections:
+        test1> db.userCollection.insertMany([{id:5,name:"sriram"},{id:6,name:"aneesh"}])
+               {
+                 acknowledged: true,
+                 insertedIds: {
+                   '0': ObjectId("6460a5ca1401cb8fe58e371e"),
+                   '1': ObjectId("6460a5ca1401cb8fe58e371f")
+                 }
+               } 
+
+Reading docs of a collection:
+
+    1. To return 1st document:
+        test1> db.userCollection.findOne()
+        { _id: ObjectId("6460a4c01401cb8fe58e371d"), id: 4, name: 'aditya' }
+
+    2. To return all docs:
+        test1> db.userCollection.find()
+        [
+          { _id: ObjectId("6460a4c01401cb8fe58e371d"), id: 4, name: 'aditya' },
+          { _id: ObjectId("6460a5ca1401cb8fe58e371e"), id: 5, name: 'sriram' },
+          { _id: ObjectId("6460a5ca1401cb8fe58e371f"), id: 6, name: 'aneesh' }
+        ]
+
+Conditions(query operators)
+$eq = "="
+$lt = "<"
+$lte = "<="
+$gt = ">"
+$gte = ">="
+$ne = "!="
+$in = "in"
+$nin = "not in"
+
+$and, $or, $not
+    3. to search for a particular record using conditions
+        Equality condition:
+        test1> db.userCollection.findOne({id:{$eq:4}})
+        { _id: ObjectId("6460a4c01401cb8fe58e371d"), id: 4, name: 'aditya' }
+                                    (or)
+        test1> db.userCollection.findOne({id:5})
+        { _id: ObjectId("6460a5ca1401cb8fe58e371e"), id: 5, name: 'sriram' }
+    
+        //all recs ids greater than 3
+        test1> db.userCollection.find({id:{$gte:3}})
+        [
+          { _id: ObjectId("6460a4c01401cb8fe58e371d"), id: 4, name: 'aditya' },
+          { _id: ObjectId("6460a5ca1401cb8fe58e371e"), id: 5, name: 'sriram' },
+          { _id: ObjectId("6460a5ca1401cb8fe58e371f"), id: 6, name: 'aneesh' }
+        ]
+
+        //created 3 more users
+        //user with id 4,7,9
+        test1> db.userCollection.find({id:{$in:[4,7,9]}})
+        [
+          { _id: ObjectId("6460a4c01401cb8fe58e371d"), id: 4, name: 'aditya' },
+          { _id: ObjectId("6460a9a91401cb8fe58e3720"), id: 7, name: 'jhon' },
+          { _id: ObjectId("6460a9a91401cb8fe58e3722"), id: 9, name: 'don' }
+        ]
+
+        //user with id 7 AND name jhon
+        test1> db.userCollection.find({ $and:[{id:7} ,{name:"jhon"} ] })
+               [ { _id: ObjectId("6460a9a91401cb8fe58e3720"), id: 7, name: 'jhon' } ]
+        
+        Projections: To get only a particular feild of record:
+        
+        db.<collection>.find({<condition(optional)>},{<feild>:(0->doesn't get displayed(default except for _id 
+        feild),1->to display )})
+
+        test1> db.userCollection.find({name:"aditya"},{name:1})
+               [ { _id: ObjectId("6460a4c01401cb8fe58e371d"), name: 'aditya' } ]
+               test1> db.userCollection.find({name:"aditya"},{name:1,_id:0})
+               [ { name: 'aditya' } ]
+               
+               to retrieve all feilds
+               test1> db.userCollection.find({},{name:1,_id:0})
+               [
+                 { name: 'aditya' },
+                 { name: 'sriram' },
+                 { name: 'aneesh' },
+                 { name: 'jhon' },
+                 { name: 'von' },
+                 { name: 'don' }
+               ]
+
+To update values:
+    //updating name of id:4 
+    test1> db.userCollection.updateOne({id:4},{$set:{name:"sriram aditya"}})
+           {
+             acknowledged: true,
+             insertedId: null,
+             matchedCount: 1,
+             modifiedCount: 1,
+             upsertedCount: 0
+           }
+           test1> db.userCollection.findOne({id:4})
+           {
+             _id: ObjectId("6460a4c01401cb8fe58e371d"),
+             id: 4,
+             name: 'sriram aditya'
+           }
+    //to update value of many: db.<collection>.updateMany({condition},{$set:{new values}})
+
+.count() -> to count number of values: db.userCollection.find().count()
+.sort({feild:1/-1}) -> to count number of values: db.userCollection.find().sort(feild:-1/1)
+similarly with delete and deleteOne
+
+
+mongo shell is only for practice 
+    
