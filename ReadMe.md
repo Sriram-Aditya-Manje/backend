@@ -24,6 +24,14 @@ The contents of this repository are organized into several files, each covering 
 
 5. **5Express**: Basic intro to express framework. covers how different paths and requests are handled using express
 
+6. **6MiddleWares**: covers Creating different types of middlewares and different ways to implement them
+
+7. **7MultipleAPI**: Organised APIs in single file to different files and handled requests
+
+8. **8MongoDB**: MongoDB shell usage and mongodb commands
+
+9. **5MongoDBAtlas**: Connected with mongoDB atlas and performed CRUD operations with APIs (not fully completed)
+
 ## Usage
 
 This code is intended as a reference for myself and others who are learning backend development. You are free to use this code as a reference or for learning purposes. However, please note that this code is not intended for production use and may contain security vulnerabilities.
